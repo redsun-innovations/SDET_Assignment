@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.11.4 on win32)" generated="2025-01-10T21:05:26.584488" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="D:\To\tests">
+<suite id="s1-s1" name="Test Todo" source="D:\To\tests\test_todo.robot">
+<test id="s1-s1-t1" name="Add a New To-Do Item" line="28">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:27.063270" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/'.</msg>
+<arg>${URL}</arg>
+<arg>Chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-01-10T21:05:27.063270" elapsed="2.811273"/>
+</kw>
+<kw name="Add To-Do Item">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:29.878670" level="INFO">Typing text 'Buy groceries' into text field 'id=new-item-input'.</msg>
+<arg>id=new-item-input</arg>
+<arg>${item}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:29.877676" elapsed="0.305401"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:30.185073" level="INFO">Clicking button 'id=add-item-button'.</msg>
+<arg>id=add-item-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:30.184079" elapsed="0.238948"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:30.452114" level="INFO">Current page contains text 'Buy groceries'.</msg>
+<arg>${item}</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-01-10T21:05:30.423027" elapsed="0.030283"/>
+</kw>
+<arg>${ITEM}</arg>
+<status status="PASS" start="2025-01-10T21:05:29.875554" elapsed="0.577756"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-01-10T21:05:30.453310" elapsed="2.243423"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:27.061275" elapsed="5.636410"/>
+</test>
+<test id="s1-s1-t2" name="Mark a To-Do Item as Completed" line="33">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:32.701233" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/'.</msg>
+<arg>${URL}</arg>
+<arg>Chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-01-10T21:05:32.701233" elapsed="2.475636"/>
+</kw>
+<kw name="Add To-Do Item">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:35.180956" level="INFO">Typing text 'Buy groceries' into text field 'id=new-item-input'.</msg>
+<arg>id=new-item-input</arg>
+<arg>${item}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:35.179939" elapsed="0.398117"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:35.579071" level="INFO">Clicking button 'id=add-item-button'.</msg>
+<arg>id=add-item-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:35.578056" elapsed="0.210421"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:35.850320" level="INFO">Current page contains text 'Buy groceries'.</msg>
+<arg>${item}</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-01-10T21:05:35.788477" elapsed="0.062866"/>
+</kw>
+<arg>${ITEM}</arg>
+<status status="PASS" start="2025-01-10T21:05:35.177887" elapsed="0.673456"/>
+</kw>
+<kw name="Mark Item as Completed">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=complete-item-button</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-01-10T21:05:35.853339" elapsed="0.042203"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:35.896557" level="INFO">Clicking button 'id=complete-item-button'.</msg>
+<arg>id=complete-item-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:35.896557" elapsed="0.259155"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:36.188900" level="INFO">Current page contains text 'Completed'.</msg>
+<arg>Completed</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-01-10T21:05:36.155712" elapsed="0.033188"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:35.852332" elapsed="0.337564"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-01-10T21:05:36.189896" elapsed="2.226664"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:32.699680" elapsed="5.717929"/>
+</test>
+<test id="s1-s1-t3" name="Remove a Completed To-Do Item" line="39">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:38.421494" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/'.</msg>
+<arg>${URL}</arg>
+<arg>Chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-01-10T21:05:38.421494" elapsed="2.503250"/>
+</kw>
+<kw name="Add To-Do Item">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:40.927740" level="INFO">Typing text 'Buy groceries' into text field 'id=new-item-input'.</msg>
+<arg>id=new-item-input</arg>
+<arg>${item}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:40.926741" elapsed="0.316202"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:41.243957" level="INFO">Clicking button 'id=add-item-button'.</msg>
+<arg>id=add-item-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:41.243957" elapsed="0.198567"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:41.486048" level="INFO">Current page contains text 'Buy groceries'.</msg>
+<arg>${item}</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-01-10T21:05:41.443574" elapsed="0.042474"/>
+</kw>
+<arg>${ITEM}</arg>
+<status status="PASS" start="2025-01-10T21:05:40.926741" elapsed="0.559307"/>
+</kw>
+<kw name="Mark Item as Completed">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=complete-item-button</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-01-10T21:05:41.487045" elapsed="0.047523"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:41.535801" level="INFO">Clicking button 'id=complete-item-button'.</msg>
+<arg>id=complete-item-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:41.535801" elapsed="0.606055"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:42.173098" level="INFO">Current page contains text 'Completed'.</msg>
+<arg>Completed</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.141856" elapsed="0.031242"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:41.487045" elapsed="0.686053"/>
+</kw>
+<kw name="Remove Item">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=remove-item-button</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.174099" elapsed="0.037780"/>
+</kw>
+<kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
+<arg>id=remove-item-button</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is enabled.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.211879" elapsed="0.046892"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:42.259772" level="INFO">Clicking button 'id=remove-item-button'.</msg>
+<arg>id=remove-item-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.259772" elapsed="0.286901"/>
+</kw>
+<kw name="Wait Until Page Does Not Contain Element" owner="SeleniumLibrary">
+<arg>xpath=//li[contains(text(), '${ITEM}')]</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` disappears from the current page.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.546673" elapsed="0.024250"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:42.173098" elapsed="0.398824"/>
+</kw>
+<kw name="Remove Item">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=remove-item-button</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.572921" elapsed="0.036406"/>
+</kw>
+<kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
+<arg>id=remove-item-button</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is enabled.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.609327" elapsed="0.045102"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:42.655429" level="INFO">Clicking button 'id=remove-item-button'.</msg>
+<arg>id=remove-item-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.655429" elapsed="0.254255"/>
+</kw>
+<kw name="Wait Until Page Does Not Contain Element" owner="SeleniumLibrary">
+<arg>xpath=//li[contains(text(), '${ITEM}')]</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` disappears from the current page.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.909684" elapsed="0.017851"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:42.571922" elapsed="0.355613"/>
+</kw>
+<kw name="Remove Item">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=remove-item-button</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.929532" elapsed="0.031359"/>
+</kw>
+<kw name="Wait Until Element Is Enabled" owner="SeleniumLibrary">
+<arg>id=remove-item-button</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is enabled.</doc>
+<status status="PASS" start="2025-01-10T21:05:42.960891" elapsed="0.044789"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:43.006732" level="INFO">Clicking button 'id=remove-item-button'.</msg>
+<arg>id=remove-item-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-10T21:05:43.006732" elapsed="0.434442"/>
+</kw>
+<kw name="Wait Until Page Does Not Contain Element" owner="SeleniumLibrary">
+<arg>xpath=//li[contains(text(), '${ITEM}')]</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` disappears from the current page.</doc>
+<status status="PASS" start="2025-01-10T21:05:43.441174" elapsed="0.045393"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:42.928533" elapsed="0.559034"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-01-10T21:05:43.488567" elapsed="2.343064"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:38.419838" elapsed="7.412756"/>
+</test>
+<test id="s1-s1-t4" name="Verify Empty To-Do Item Message" line="48">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:45.835599" level="INFO">Opening browser 'Chrome' to base url 'http://127.0.0.1:5000/'.</msg>
+<arg>${URL}</arg>
+<arg>Chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-01-10T21:05:45.834591" elapsed="2.479778"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>id=no-todo-message</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-01-10T21:05:48.315367" elapsed="0.031107"/>
+</kw>
+<kw name="Element Text Should Be" owner="SeleniumLibrary">
+<msg time="2025-01-10T21:05:48.349470" level="INFO">Verifying element 'id=no-todo-message' contains exact text 'No to-do items'.</msg>
+<arg>id=no-todo-message</arg>
+<arg>No to-do items</arg>
+<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
+<status status="PASS" start="2025-01-10T21:05:48.349470" elapsed="0.057242"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-01-10T21:05:48.406712" elapsed="2.280307"/>
+</kw>
+<status status="PASS" start="2025-01-10T21:05:45.833594" elapsed="4.854388"/>
+</test>
+<status status="PASS" start="2025-01-10T21:05:26.637363" elapsed="24.053873"/>
+</suite>
+<status status="PASS" start="2025-01-10T21:05:26.587488" elapsed="24.107459"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="0" skip="0" id="s1" name="Tests">Tests</stat>
+<stat pass="4" fail="0" skip="0" id="s1-s1" name="Test Todo">Tests.Test Todo</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

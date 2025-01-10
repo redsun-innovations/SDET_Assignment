@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            font-size: 16px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button#add-item-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button#add-item-button:hover {
+            background-color: #45a049;
+        }
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .todo-item.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .todo-actions button {
+            background-color: #FF6347;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #no-todo-message {
+            text-align: center;
+            color: #888;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form action="{{ url_for('add_item') }}" method="POST">
+            <input type="text" name="item" id="new-item-input" placeholder="Add a new to-do item" required>
+            <button type="submit" id="add-item-button">Add Item</button>
+        </form>
+
+        <ul class="todo-list">
+            {% if todos %}
+                {% for todo in todos %}
+                    <li class="todo-item {% if todo.completed %}completed{% endif %}">
+                        <span>{{ todo.name }}</span>
+                        <div class="todo-actions">
+                            {% if not todo.completed %}
+                                <a href="{{ url_for('complete_item', item_id=loop.index0) }}">
+                                    <button id="complete-item-button" type="button">Mark as Completed</button>
+                                </a>
+                            {% endif %}
+                            <a href="{{ url_for('remove_item', item_id=loop.index0) }}">
+                                <button id="remove-item-button" type="button">Remove</button>
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p id="no-todo-message">No to-do items</p>
+            {% endif %}
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const removeButtons = document.querySelectorAll('[id^="remove-item-button-"]');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    const itemId = this.id.split('-')[3];  // Extract the index from the button ID
+                    console.log(`Remove button clicked for item ID: ${itemId}`); // Log the item ID
+                    removeItem(itemId);  // Call your function to remove the item
+                });
+            });
+        });
+
+        function removeItem(itemId) {
+            // Perform the action of removing the item, like making an API call or updating the UI
+            console.log(`Removing item with ID: ${itemId}`);
+
+            // Assuming you are using Flask's route to handle item removal
+            fetch(`/remove/${itemId}`, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // You can implement code to remove the item from the list on the frontend, if needed
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
