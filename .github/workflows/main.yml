@@ -37,15 +37,15 @@ jobs:
           CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}' | cut -d '.' -f 1,2)  # Get the major and minor version
           echo "Detected Chrome version: $CHROME_VERSION"  # Debugging output
 
-          # Fetch the corresponding ChromeDriver version for the detected Chrome version
+          # Try to fetch the corresponding ChromeDriver version for the detected Chrome version
           CHROME_DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-          echo "Detected ChromeDriver version: $CHROME_DRIVER_VERSION"  # Debugging output
 
-          # Verify if version is correctly fetched before continuing
+          # If the correct version is not found, fall back to a known good version (e.g., 130.0)
           if [ -z "$CHROME_DRIVER_VERSION" ]; then
-            echo "Failed to fetch ChromeDriver version!"
-            exit 1
+            echo "ChromeDriver version for Chrome $CHROME_VERSION not found. Falling back to version 130.0"
+            CHROME_DRIVER_VERSION="130.0.5180.161"
           fi
+          echo "Using ChromeDriver version: $CHROME_DRIVER_VERSION"  # Debugging output
 
           # Download and install the correct ChromeDriver version
           echo "Downloading ChromeDriver version $CHROME_DRIVER_VERSION..."
