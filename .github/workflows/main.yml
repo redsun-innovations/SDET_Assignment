@@ -31,7 +31,7 @@ jobs:
           sudo dpkg -i google-chrome-stable_current_amd64.deb
           sudo apt-get install -y -f
 
-            - name: Install ChromeDriver
+      - name: Install ChromeDriver
         run: |
           # Get the correct version of ChromeDriver matching Chrome version
           CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}' | cut -d '.' -f 1,2)  # Get the major and minor version
