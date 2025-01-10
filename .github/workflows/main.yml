@@ -48,6 +48,13 @@ jobs:
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/local/bin/
 
+    # Step 4: Install Robot Framework
+    - name: Install Robot Framework
+      run: |
+        python -m pip install --upgrade pip
+        pip install robotframework
+    
+
     # Step 4: Run your tests or other necessary steps
     - name: Run Tests
       run: |
