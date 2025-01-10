@@ -23,6 +23,7 @@ jobs:
           chrome-version: 'latest'        # You can specify the desired version, e.g., '120', or leave as 'latest'
           install-chromedriver: true      # Install the compatible ChromeDriver
           install-dependencies: true      # Automatically install required dependencies for Chrome
+          no-sudo: false
 
       # Step 3: Install Python and other dependencies (if needed)
       - name: Set up Python
