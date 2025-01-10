@@ -1,4 +1,4 @@
-name: Install ChromeDriver
+name: Install Chrome and ChromeDriver
 
 on:
   push:
@@ -9,91 +9,39 @@ on:
       - main
 
 jobs:
-  install_chromedriver:
+  install_chrome_and_chromedriver:
     runs-on: ubuntu-latest
     steps:
       # Step 1: Checkout the code from the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Install Google Chrome
-      - name: Install Google Chrome
-        run: |
-          sudo apt update
-          sudo apt install -y wget curl unzip
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb
-          sudo apt --fix-broken install -y
+      # Step 2: Set up Google Chrome and ChromeDriver using browser-actions/setup-chrome
+      - name: Set up Google Chrome and ChromeDriver
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 'latest'        # You can specify the desired version, e.g., '120', or leave as 'latest'
+          install-chromedriver: true      # Install the compatible ChromeDriver
+          install-dependencies: true      # Automatically install required dependencies for Chrome
 
-      # Step 3: Install dependencies for ChromeDriver
-      - name: Install Chrome dependencies
-        run: |
-          sudo apt install -y libx11-dev libxkbfile-dev libgdk-pixbuf2.0-dev libgtk-3-dev libnss3 libgconf-2-4 libfontconfig1
-
-      # Step 4: Debug Output to help identify the issue
-      - name: Debug Output
-        run: |
-          echo "Google Chrome version:"
-          google-chrome-stable --version
-
-          echo "Fetching ChromeDriver version..."
-          CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}' | cut -d '.' -f 1,2)
-          echo "Detected Chrome version: $CHROME_VERSION"
-          CHROME_DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION || echo "Not found")
-          echo "ChromeDriver version: $CHROME_DRIVER_VERSION"
-          
-          echo "Checking if chromedriver exists in PATH..."
-          which chromedriver
-          chromedriver --version
-
-      # Step 5: Get the correct version of ChromeDriver matching the Chrome version
-      - name: Get Chrome version and install ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}' | cut -d '.' -f 1,2)  # Get the major and minor version
-          echo "Detected Chrome version: $CHROME_VERSION"  # Debugging output
-
-          # Try to fetch the corresponding ChromeDriver version for the detected Chrome version
-          CHROME_DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION || echo "Not found")
-
-          # If the correct version is not found, fall back to a known good version (e.g., 130.0)
-          if [ -z "$CHROME_DRIVER_VERSION" ]; then
-            echo "ChromeDriver version for Chrome $CHROME_VERSION not found. Falling back to version 130.0"
-            CHROME_DRIVER_VERSION="130.0.5180.161"
-          fi
-          echo "Using ChromeDriver version: $CHROME_DRIVER_VERSION"  # Debugging output
-
-          # Download and install the correct ChromeDriver version
-          echo "Downloading ChromeDriver version $CHROME_DRIVER_VERSION..."
-          wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
-
-          # Unzip and move the chromedriver to a system path
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/chromedriver
-
-          # Make chromedriver executable
-          sudo chmod +x /usr/local/bin/chromedriver
-
-          # Cleanup
-          rm chromedriver_linux64.zip
-
-          echo "ChromeDriver installation completed successfully!"
-
-      # Step 6: Install Python and other dependencies (if needed)
+      # Step 3: Install Python and other dependencies (if needed)
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
 
-      # Step 7: Install required Python packages (if needed)
+      # Step 4: Install required Python packages (if needed)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Step 5: Run Tests
       - name: Run Tests
         run: |
           robot --outputdir results tests/
 
+      # Step 6: Upload Test Results
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
