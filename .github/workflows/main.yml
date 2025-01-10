@@ -34,9 +34,10 @@ jobs:
       - name: Install ChromeDriver
         run: |
           # Get the correct version of ChromeDriver matching Chrome version
-          CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}')
+          CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}' | cut -d '.' -f 1,2)  # Get the major and minor version
           echo "Detected Chrome version: $CHROME_VERSION"  # Debugging output
           
+          # Fetch the corresponding ChromeDriver version
           CHROME_DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
           echo "Detected ChromeDriver version: $CHROME_DRIVER_VERSION"  # Debugging output
 
