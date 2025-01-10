@@ -35,7 +35,17 @@ jobs:
         run: |
           # Get the correct version of ChromeDriver matching Chrome version
           CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}')
+          echo "Detected Chrome version: $CHROME_VERSION"  # Debugging output
+          
           CHROME_DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+          echo "Detected ChromeDriver version: $CHROME_DRIVER_VERSION"  # Debugging output
+
+          # Verify if version is correctly fetched before continuing
+          if [ -z "$CHROME_DRIVER_VERSION" ]; then
+            echo "Failed to fetch ChromeDriver version!"
+            exit 1
+          fi
+
           wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
           unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/local/bin/chromedriver
