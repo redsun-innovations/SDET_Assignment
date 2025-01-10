@@ -2,4 +2,4 @@ robotframework
 robotframework-seleniumlibrary
 robotframework-pabot
 selenium
-robotframework-flash
+flash
