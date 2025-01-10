@@ -14,55 +14,49 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    # Install Chrome Dependencies (skip problematic packages)
-    - name: Install Chrome Dependencies (skip problematic packages)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          libglib2.0-0 \
-          libatk1.0-0 \
-          libatk-bridge2.0-0 \
-          libgdk-pixbuf2.0-0 \
-          libgtk-3-0 \
-          libgbm-dev \
-          libnss3-dev \
-          libxss-dev \
-          fonts-liberation \
-          xdg-utils \
-          libu2f-udev \
-          libnss3 \
-          libx11-xcb-dev \
-          || true  # Skip failing dependencies without error
 
-    # Set up Google Chrome with ChromeDriver
-    - name: Set up Chrome
-      uses: browser-actions/setup-chrome@v1
-      with:
-        chrome-version: latest
-        install-chromedriver: true
-        install-dependencies: true
-        no-sudo: false
+# Step 1: Install Chrome Dependencies (skip problematic packages like libgconf-2-4 and libasound2)
+- name: Install Chrome Dependencies (skip problematic packages)
+  run: |
+    sudo apt-get update
+    sudo apt-get install -y \
+      libglib2.0-0 \
+      libatk1.0-0 \
+      libatk-bridge2.0-0 \
+      libgdk-pixbuf2.0-0 \
+      libgtk-3-0 \
+      libgbm-dev \
+      libnss3-dev \
+      libxss-dev \
+      fonts-liberation \
+      xdg-utils \
+      libu2f-udev \
+      libnss3 \
+      libx11-xcb-dev \
+    || echo "Some packages could not be installed, skipping."
 
-    # Step 3: Set up Python
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
+# Step 2: Install Google Chrome
+- name: Install Google Chrome
+  run: |
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
 
-    # Step 4: Install required Python packages
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+# Step 3: Install Chromedriver
+- name: Install ChromeDriver
+  run: |
+    LATEST=$(curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+    wget https://chromedriver.storage.googleapis.com/$LATEST/chromedriver_linux64.zip
+    unzip chromedriver_linux64.zip
+    sudo mv chromedriver /usr/local/bin/
 
-    # Step 5: Run Tests
-    - name: Run Tests
-      run: |
-        robot --outputdir results tests/
-
-    # Step 6: Upload Test Results
-    - name: Upload Test Results
-      uses: actions/upload-artifact@v3
-      with:
-        name: Robot Test Reports
-        path: results/
+# Step 4: Run your tests or other necessary steps
+- name: Run Tests
+  run: |
+    robot --outputdir results tests/
+  
+# Step 5: Upload Test Results
+- name: Upload Test Results
+  uses: actions/upload-artifact@v3
+  with:
+    name: Robot Test Reports
+    path: results/
