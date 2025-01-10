@@ -81,8 +81,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 7: Run tests (optional, if applicable to your project)
       - name: Run Tests
         run: |
-          pytest
+          robot --outputdir results tests/
 
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Robot Test Reports
+          path: results/
