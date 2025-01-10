@@ -39,13 +39,13 @@ jobs:
           
           # Fetch the corresponding ChromeDriver version
           CHROME_DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-          echo "Detected ChromeDriver version: $CHROME_DRIVER_VERSION"  # Debugging output
-
-          # Verify if version is correctly fetched before continuing
+          
+          # Check if the ChromeDriver version was successfully fetched
           if [ -z "$CHROME_DRIVER_VERSION" ]; then
-            echo "Failed to fetch ChromeDriver version!"
+            echo "Failed to fetch ChromeDriver version! Please check the compatibility."
             exit 1
           fi
+          echo "Detected ChromeDriver version: $CHROME_DRIVER_VERSION"  # Debugging output
 
           # Download and install the correct ChromeDriver version
           wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
