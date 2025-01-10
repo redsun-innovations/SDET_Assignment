@@ -33,8 +33,15 @@ jobs:
         sudo apt-get install -y libxss1
         sudo apt-get install -y libappindicator3-1
 
-    - name: Run Tests
+    - name: Check Chrome Installation
       run: |
+        google-chrome --version
+        chromedriver --version
+
+    - name: Run Robot Framework Tests
+      run: |
+        export CHROME_BIN=/usr/bin/google-chrome
+        export CHROMEDRIVER_PATH=/usr/bin/chromedriver
         robot --outputdir results tests/
 
     - name: Upload Test Results
