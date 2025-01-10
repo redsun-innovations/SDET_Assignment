@@ -34,20 +34,22 @@ jobs:
           libx11-xcb-dev \
         || echo "Some packages could not be installed, skipping."
 
-    # Step 2: Install Google Chrome
-    - name: Install Google Chrome
+    # Step 2: Install Google Chrome version 76.0.3809.68
+    - name: Install Google Chrome version 76.0.3809.68
       run: |
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+        wget https://www.slimjet.com/chrome/old-version.php
+        # Download the Chrome version 76.0.3809.68 and install
+        wget https://dl.google.com/linux/direct/google-chrome-76.0.3809.68_amd64.deb
+        sudo apt-get install -y ./google-chrome-76.0.3809.68_amd64.deb
 
-    # Step 3: Remove old Chromedriver and install the correct version
-    - name: Install Correct Version of Chromedriver (131.0.6778.264)
+    # Step 3: Remove old Chromedriver and install the correct version (76.0.3809.68)
+    - name: Install Correct Version of Chromedriver (76.0.3809.68)
       run: |
         # Remove any existing chromedriver in PATH
         sudo rm -f /usr/local/bin/chromedriver
 
-        # Install the correct version of chromedriver (131.0.6778.264)
-        wget https://chromedriver.storage.googleapis.com/131.0.6778.264/chromedriver_linux64.zip
+        # Install the correct version of chromedriver (76.0.3809.68)
+        wget https://chromedriver.storage.googleapis.com/76.0.3809.68/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/local/bin/
 
