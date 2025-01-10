@@ -5,6 +5,14 @@ Library    SeleniumLibrary
 ${URL}    http://127.0.0.1:5000/
 ${ITEM}   Buy groceries
 
+*** Test Cases ***
+Test Todo App
+    Open Browser  ${URL}  Chrome  --headless  --no-sandbox  --disable-dev-shm-usage
+    Maximize Browser Window
+    # Your test steps
+    Close Browser
+    
+
 *** Keywords ***
 Add To-Do Item
     [Arguments]    ${item}
