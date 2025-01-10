@@ -4,37 +4,53 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Enables manual trigger functionality   
+  workflow_dispatch: # Enable manual trigger
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      flask:
+        image: python:3.9
+        options: --health-cmd="curl --fail http://localhost:5000/ || exit 1" --health-interval=30s --health-timeout=30s --health-retries=3
+        ports:
+          - 5000:5000  # Exposing Flask app
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Set Up Python
+    - name: Set Up Python for Flask
       uses: actions/setup-python@v4
       with:
         python-version: 3.9
 
-    - name: Install Dependencies
+    - name: Install Flask Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Download Browser Driver
+    - name: Start Flask Application
       run: |
-        sudo apt-get install -y chromium-chromedriver
-        export PATH=$PATH:/usr/lib/chromium-browser/
+        # Run Flask in background
+        nohup python app.py &
+        sleep 10 # Give Flask time to start
 
-    - name: Run Tests
+    - name: Install UI Testing Dependencies (e.g., Cypress)
       run: |
-        robot --outputdir results tests/
+        npm install # or pip install for Python-based UI testing frameworks like Selenium
+
+    - name: Run UI Tests
+      run: |
+        # Example for running Cypress tests
+        npx cypress run
+        # Alternatively, if you're using Selenium, use appropriate commands to run tests
+        # python -m unittest tests/test_ui.py
 
     - name: Upload Test Results
       uses: actions/upload-artifact@v3
       with:
-        name: Robot Test Reports
+        name: Test Results
         path: results/
+
