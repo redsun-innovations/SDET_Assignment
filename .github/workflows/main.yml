@@ -1,4 +1,4 @@
-name: Setup Chrome with Dependencies
+name: Setup Chrome and Run Tests
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  setup-chrome:
+  setup-chrome-and-run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -42,32 +42,26 @@ jobs:
         install-dependencies: true
         no-sudo: false
 
-    # Verify Chrome installation
-    - name: Verify Chrome Installation
+    # Step 3: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    # Step 4: Install required Python packages
+    - name: Install dependencies
       run: |
-        chrome --version
-        chromedriver --version
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-      # Step 3: Install Python and other dependencies (if needed)
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
+    # Step 5: Run Tests
+    - name: Run Tests
+      run: |
+        robot --outputdir results tests/
 
-      # Step 4: Install required Python packages (if needed)
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      # Step 5: Run Tests
-      - name: Run Tests
-        run: |
-          robot --outputdir results tests/
-
-      # Step 6: Upload Test Results
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: Robot Test Reports
-          path: results/
+    # Step 6: Upload Test Results
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: Robot Test Reports
+        path: results/
