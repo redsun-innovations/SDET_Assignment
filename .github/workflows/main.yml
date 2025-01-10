@@ -40,14 +40,19 @@ jobs:
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
 
-    # Step 3: Install Chromedriver
-    - name: Install ChromeDriver
+    # Step 3: Remove old Chromedriver and install the correct version
+    - name: Install Correct Version of Chromedriver
       run: |
-        LATEST=$(curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+        # Remove any existing chromedriver in PATH
+        sudo rm -f /usr/local/bin/chromedriver
+
+        # Install the correct version of chromedriver
+        LATEST=$(curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE_131)
         wget https://chromedriver.storage.googleapis.com/$LATEST/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/local/bin/
 
+        
     # Step 4: Install Robot Framework
     - name: Install Robot Framework
       run: |
