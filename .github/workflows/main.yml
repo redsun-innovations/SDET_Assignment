@@ -31,7 +31,8 @@ jobs:
           xdg-utils \
           libu2f-udev \
           libnss3 \
-          libx11-xcb-dev || true  # Skip failing dependencies without error
+          libx11-xcb-dev \
+          || true  # Skip failing dependencies without error
 
     # Set up Google Chrome with ChromeDriver
     - name: Set up Chrome
